@@ -1,0 +1,12 @@
+new_users:
+    - centos
+docker_users:
+    - centos
+harbor_user: centos
+harbor_install_version: v1.10.10
+harbor_admin_password: Harbor12345
+
+proxy_env:
+    http_proxy: ""
+    https_proxy: ""
+    no_proxy: ""

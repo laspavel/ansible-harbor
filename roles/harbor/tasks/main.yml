@@ -1,0 +1,37 @@
+---
+- name: Get the users home directory
+  shell: >
+    egrep "^{{ harbor_user }}:" /etc/passwd | awk -F: '{ print $6 }'
+  changed_when: false
+  register: user_home
+
+- name: Creates harbor directory
+  file:
+    state: directory
+    owner: "{{ harbor_user }}"
+    mode: 0700
+    dest: "{{ user_home.stdout }}/"
+
+- name: Download harbor install from Github
+  unarchive:
+    src: "{{ harbor_install_download_url }}"
+    dest: "{{ user_home.stdout }}"
+    mode: 0777
+    remote_src: yes
+  changed_when: false
+
+- name: Copy config.cfg
+  template:
+    src: 'harbor.yml.j2'
+    dest: "{{ user_home.stdout }}/harbor/harbor.yml"
+    owner: "{{ harbor_user }}"
+    group: "{{ harbor_user }}"
+    mode: '0755'
+  ignore_errors: true
+
+- name: "RUN install.sh"
+  shell: 
+    cmd: "./install.sh --with-clair --with-chartmuseum"
+    chdir: "{{ user_home.stdout }}/harbor/"
+  changed_when: false
+

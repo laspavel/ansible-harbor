@@ -1,0 +1,8 @@
+*.key
+*.crt
+*.pem
+id_rsa.pub
+dist/
+.idea/
+.DS_Store
+Thumbs.db

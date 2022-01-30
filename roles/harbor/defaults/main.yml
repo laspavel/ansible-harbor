@@ -1,0 +1,16 @@
+---
+harbor_install_version: v1.10.10
+harbor_install_download_url: "https://github.com/goharbor/harbor/releases/download/{{ harbor_install_version }}/harbor-online-installer-{{ harbor_install_version }}.tgz"
+harbor_install_golder: "./harbor"
+harbor_hostname: "hub.laspavel.top"
+harbor_protocol: "http"
+harbor_ssl_cert: "/root/cert/harbor.example.com.crt"
+harbor_ssl_key: "/root/cert/harbor.example.com.key"
+harbor_admin_password: Harbor12345
+
+docker_compose_path: /usr/local/bin/docker-compose
+
+proxy_env:
+    http_proxy: ""
+    https_proxy: ""
+    no_proxy: ""
