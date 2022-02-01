@@ -1,5 +1,5 @@
 ---
-harbor_install_version: v1.10.10
+harbor_install_version: v2.4.0
 harbor_install_download_url: "https://github.com/goharbor/harbor/releases/download/{{ harbor_install_version }}/harbor-online-installer-{{ harbor_install_version }}.tgz"
 harbor_install_golder: "./harbor"
 harbor_hostname: "hub.laspavel.top"

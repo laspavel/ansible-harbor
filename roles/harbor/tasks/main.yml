@@ -31,7 +31,7 @@
 
 - name: "RUN install.sh"
   shell: 
-    cmd: "./install.sh --with-clair --with-chartmuseum"
+    cmd: "./install.sh --with-chartmuseum"
     chdir: "{{ user_home.stdout }}/harbor/"
   changed_when: false
 
