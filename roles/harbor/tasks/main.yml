@@ -51,6 +51,10 @@
     chdir: "{{ user_home.stdout }}/harbor/"
   changed_when: false
 
+- name: Wait 20 sec.
+  pause:
+    seconds: 20
+
 - name: Configure LDAP
   uri:
     url: https://{{ harbor_hostname }}:{{ harbor_https_port }}/api/v2.0/configurations
