@@ -28,6 +28,22 @@
     group: "{{ harbor_user }}"
     mode: '0755'
   ignore_errors: true
+  
+- name: Copy ssl cert to user home directory
+  copy:
+    src: "{{ harbor_ssl_cert }}"
+    dest: "{{ user_home.stdout }}/harbor/{{ harbor_ssl_cert }}"
+    owner: "{{ harbor_user }}"
+    mode: 0755
+  ignore_errors: true
+
+- name: Copy ssl key to user home directory
+  copy:
+    src: "{{ harbor_ssl_key }}"
+    dest: "{{ user_home.stdout }}/harbor/{{ harbor_ssl_key }}"
+    owner: "{{ harbor_user }}"
+    mode: 0755
+  ignore_errors: true
 
 - name: "RUN install.sh"
   shell: 
@@ -35,3 +51,33 @@
     chdir: "{{ user_home.stdout }}/harbor/"
   changed_when: false
 
+- name: Configure LDAP
+  uri:
+    url: https://{{ harbor_hostname }}:{{ harbor_https_port }}/api/v2.0/configurations
+    method: PUT
+    url_username: admin
+    url_password: "{{ harbor_admin_password }}"
+    body_format: json
+    force_basic_auth: yes
+    headers:
+      Content-Type: "application/json"
+    body:
+      auth_mode: "ldap_auth"
+      ldap_url: "{{ harbor_ldap_url }}"
+      ldap_base_dn: "{{ harbor_ldap_base_dn}}"
+      ldap_search_dn: "{{ harbor_ldap_search_dn }}"
+      ldap_search_password: "{{ harbor_ldap_search_password }}"
+      ldap_filter: "{{ harbor_ldap_filter }}"
+      ldap_scope: "{{harbor_ldap_scope}}"
+      ldap_timeout: "{{ harbor_ldap_timeout }}"
+      ldap_uid: "{{ harbor_ldap_uid }}"
+      self_registration: "{{ harbor_self_registration }}"
+      #ldap_verify_cert: "{{ harbor_ldap_verify_cert }}"
+      #ldap_group_admin_dn: "{{ harbor_ldap_group_admin_dn }}"
+      #ldap_group_attribute_name: "{{ harbor_ldap_group_attribute_name }}"
+      #ldap_group_base_dn: "{{ harbor_ldap_group_base_dn }}"
+      #ldap_group_search_filter: "{{ harbor_ldap_group_search_filter }}"
+      #ldap_group_search_scope: "{{ harbor_group_search_scope }}"
+      #ldap_group_membership_attribute: "{{ harbor_group_membership_attribute }}"
+    validate_certs: no
+  when: harbor_ldap == True
