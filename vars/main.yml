@@ -4,9 +4,26 @@ docker_users:
     - centos
 harbor_user: centos
 harbor_install_version: v2.4.0
-harbor_admin_password: Harbor12345
+harbor_admin_password: Harbor123123
+harbor_hostname: "harbor.atbmarket.com"
+harbor_protocol: "https"
+harbor_https_port: "443"
+harbor_http_port: "80"
+harbor_ssl_cert: "harbor.atbmarket.com.crt"
+harbor_ssl_key: "harbor.atbmarket.com.key"
+
+harbor_ldap: true
+harbor_ldap_url: "atbmarket.com"
+harbor_ldap_base_dn: "dc=atbmarket,dc=com"
+harbor_ldap_search_password: Ntckf_55
+harbor_ldap_search_dn: zab3_ldap_search
+harbor_ldap_filter: "(&(objectClass=user)(memberOf=cn=StorePlus_Rancher_Admins,ou=Store+,ou=Groups,dc=atbmarket,dc=com))"
+harbor_ldap_scope: 2
+harbor_ldap_timeout: 50
+harbor_ldap_uid: sAMAccountName
+harbor_self_registration: False
 
 proxy_env:
-    http_proxy: ""
-    https_proxy: ""
-    no_proxy: ""
+    http_proxy: "http://proxy-dev.store-plus.atbmarket.com:8080"
+    https_proxy: "http://proxy-dev.store-plus.atbmarket.com:8080"
+    no_proxy: "rbs-app,shop-sol-d01,.atbmarket.com,127.0.0.1,10.0.0.0/8,172.16.0.0/12,192.168.0.0/1"

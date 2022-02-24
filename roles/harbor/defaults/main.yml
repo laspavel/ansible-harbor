@@ -1,9 +1,12 @@
 ---
+harbor_user: root
 harbor_install_version: v2.4.0
 harbor_install_download_url: "https://github.com/goharbor/harbor/releases/download/{{ harbor_install_version }}/harbor-online-installer-{{ harbor_install_version }}.tgz"
 harbor_install_golder: "./harbor"
 harbor_hostname: "hub.laspavel.top"
 harbor_protocol: "http"
+harbor_https_port: "443"
+harbor_http_port: "80"
 harbor_ssl_cert: "/root/cert/harbor.example.com.crt"
 harbor_ssl_key: "/root/cert/harbor.example.com.key"
 harbor_admin_password: Harbor12345
@@ -14,3 +17,17 @@ proxy_env:
     http_proxy: ""
     https_proxy: ""
     no_proxy: ""
+
+#harbor_ssl_cert: "test-harbor.example.com.crt"
+#harbor_ssl_key: "test-harbor.example.com.key"
+
+harbor_ldap: false
+#harbor_ldap_url: "example.com"
+#harbor_ldap_base_dn: "dc=example,dc=com"
+harbor_ldap_search_password: P@ssw0rd
+harbor_ldap_search_dn: username_ldap_search
+harbor_ldap_filter: "(&(objectClass=user)(memberOf=cn=Harbor_Admins,ou=Project,ou=Groups,dc=example,dc=com))"
+harbor_ldap_scope: 2
+harbor_ldap_timeout: 50
+harbor_ldap_uid: sAMAccountName
+harbor_self_registration: False
